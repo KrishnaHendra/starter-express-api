@@ -1,17 +1,52 @@
+const {
+  default: axios
+} = require("axios");
 const express = require("express");
+const dotenv = require("dotenv");
+
+dotenv.config();
+
 const app = express();
 
 app.set("view engine", "ejs");
 
-app.get("/login", (req, res) => {
-  const { code, shop } = req.query;
-  res.json({
-    message: "Success",
+app.get("/login", async (req, res) => {
+  const {
     code,
-    shop,
+    shop
+  } = req.query;
+  const apiUrl = process.env.BACKEND_URL;
+  const {
+    data: barcodeData
+  } = await axios.get(
+    `${apiUrl}/bitlogin/api/login/whatsapp/barcode/${shop}?code=${code}`
+  );
+
+  res.render("whatsappLogin", {
+    code,
+    barcodeData,
+    apiUrl
   });
-  // res.render("whatsappLogin", { code });
 });
+
+app.get("/success", async (req, res) => {
+  const {
+    code,
+    type
+  } = req.query;
+  const apiUrl = process.env.BACKEND_URL;
+  const {
+    data
+  } = await axios.get(
+    `${apiUrl}/bitlogin/api/login/whatsapp/status?code=${code}`
+  );
+  const whatsappNumber = process.env.WHATSAPP_NUMBER;
+  res.render("successPage", {
+    data,
+    type,
+    whatsappNumber
+  });
+})
 
 app.get("/", (req, res) => {
   res.status(200).json({
@@ -25,7 +60,7 @@ app.get("/test", (req, res) => {
   });
 });
 
-const port = process.env.port;
+const port = process.env.PORT;
 app.listen(port, (req, res) => {
   console.log(`Server running on port ${port}`);
 });

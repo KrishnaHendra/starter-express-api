@@ -1,169 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>bitLogin - Login WhatsApp</title>
-    <script
-      src="https://code.jquery.com/jquery-3.6.4.min.js"
-      integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 
     <style>
-      html,
-      body {
-        height: 100%;
-        width: 100%;
-      }
-
-      .container {
-        text-align: center;
-        align-items: center;
-        display: flex;
-        justify-content: center;
-        height: 100%;
-        width: 100%;
-      }
-
-      .margin-none {
-        margin: 0;
-      }
-
-      .margin-50 {
-        margin: 50px;
-      }
-
-      .hide {
-        display: none;
-      }
-
-      .form-group {
-        display: block;
-        text-align: center;
-        margin: 10px 0;
-      }
-
-      .form-control {
-        margin: 5px 0;
-        width: 90%;
-        padding: 15px;
-      }
-
-      #btnSubmit {
-        padding: 15px;
-        color: white;
-        border-radius: 10px;
-        background: #262627;
-        font-size: 16px;
-        margin-top: 20px;
-      }
-
-      #btnSubmit:hover {
-        background: #393939;
-      }
-
-      #alertBody {
-        background: #cb3838;
-        padding: 20px;
-        color: white;
-        font-size: 16px;
-        font-weight: 600;
-        margin-bottom: 15px;
-        border-radius: 5px;
-      }
-
-      /* Loader */
-      .spinner {
-        margin: 80px auto;
-        width: 90px;
-        height: 80px;
-        text-align: center;
-        font-size: 10px;
-      }
-
-      .spinner > div {
-        background-color: #333;
-        height: 100%;
-        width: 6px;
-        display: inline-block;
-
-        -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
-        animation: sk-stretchdelay 1.2s infinite ease-in-out;
-      }
-
-      .spinner .rect2 {
-        -webkit-animation-delay: -1.1s;
-        animation-delay: -1.1s;
-      }
-
-      .spinner .rect3 {
-        -webkit-animation-delay: -1s;
-        animation-delay: -1s;
-      }
-
-      .spinner .rect4 {
-        -webkit-animation-delay: -0.9s;
-        animation-delay: -0.9s;
-      }
-
-      .spinner .rect5 {
-        -webkit-animation-delay: -0.8s;
-        animation-delay: -0.8s;
-      }
-
-      @-webkit-keyframes sk-stretchdelay {
-        0%,
-        40%,
-        100% {
-          -webkit-transform: scaleY(0.4);
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
         }
 
-        20% {
-          -webkit-transform: scaleY(1);
-        }
-      }
-
-      @keyframes sk-stretchdelay {
-        0%,
-        40%,
-        100% {
-          transform: scaleY(0.4);
-          -webkit-transform: scaleY(0.4);
+        .container {
+            text-align: center;
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
         }
 
-        20% {
-          transform: scaleY(1);
-          -webkit-transform: scaleY(1);
+        .margin-none {
+            margin: 0;
         }
-      }
+
+        .margin-50 {
+            margin: 50px;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .form-group {
+            display: block;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .form-control {
+            margin: 5px 0;
+            width: 90%;
+            padding: 15px;
+        }
+
+        #btnSubmit {
+            padding: 15px;
+            color: white;
+            border-radius: 10px;
+            background: #262627;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        #btnSubmit:hover {
+            background: #393939;
+        }
+
+        #alertBody {
+            background: #cb3838;
+            padding: 20px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+
+        /* Loader */
+        .spinner {
+            margin: 80px auto;
+            width: 90px;
+            height: 80px;
+            text-align: center;
+            font-size: 10px;
+        }
+
+        .spinner>div {
+            background-color: #333;
+            height: 100%;
+            width: 6px;
+            display: inline-block;
+
+            -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+            animation: sk-stretchdelay 1.2s infinite ease-in-out;
+        }
+
+        .spinner .rect2 {
+            -webkit-animation-delay: -1.1s;
+            animation-delay: -1.1s;
+        }
+
+        .spinner .rect3 {
+            -webkit-animation-delay: -1s;
+            animation-delay: -1s;
+        }
+
+        .spinner .rect4 {
+            -webkit-animation-delay: -0.9s;
+            animation-delay: -0.9s;
+        }
+
+        .spinner .rect5 {
+            -webkit-animation-delay: -0.8s;
+            animation-delay: -0.8s;
+        }
+
+        @-webkit-keyframes sk-stretchdelay {
+
+            0%,
+            40%,
+            100% {
+                -webkit-transform: scaleY(0.4);
+            }
+
+            20% {
+                -webkit-transform: scaleY(1);
+            }
+        }
+
+        @keyframes sk-stretchdelay {
+
+            0%,
+            40%,
+            100% {
+                transform: scaleY(0.4);
+                -webkit-transform: scaleY(0.4);
+            }
+
+            20% {
+                transform: scaleY(1);
+                -webkit-transform: scaleY(1);
+            }
+        }
     </style>
-  </head>
+</head>
 
-  <body>
+<body>
     <div class="container">
-      <div id="content"></div>
+        <div id="content"></div>
     </div>
 
     <script>
-      const apiUrl = "<%= apiUrl %>";
-      const code = "<%= code %>";
-      const barcode = "<%= src %>";
-      const updateUrl = `${apiUrl}/bitlogin/api/login/whatsapp/status?code=${code}`;
-      const updateInterval = 2500;
-      const content = $("#content");
+        const apiUrl = "<%= apiUrl %>";
+        const code = "<%= code %>";
+        const barcode = "<%= barcodeData.qrCode %>";
+        const updateUrl = `${apiUrl}/bitlogin/api/login/whatsapp/status?code=${code}`;
+        const updateInterval = 2500;
+        const content = $("#content");
 
-      function updateView(data) {
-        const loginStatus = data ? data.data.status : 0;
-        const divForBarcode = document.getElementById("showBarcode");
-        const divOpenWhatsapp = document.getElementById("whatsappOpened");
-        const divVerifyWhatsapp = document.getElementById("whatsappVerify");
-        const divSuccess = document.getElementById("successContent");
-        const divProfile = document.getElementById("completeProfile");
+        function updateView(data) {
+            const loginStatus = data ? data.data.status : 0;
+            const divForBarcode = document.getElementById("showBarcode");
+            const divOpenWhatsapp = document.getElementById("whatsappOpened");
+            const divVerifyWhatsapp = document.getElementById("whatsappVerify");
+            const divSuccess = document.getElementById("successContent");
+            const divProfile = document.getElementById("completeProfile");
 
-        if (loginStatus === 0) {
-          const html = `<div id="showBarcode">
+            if (loginStatus === 0) {
+                const html = `<div id="showBarcode">
             <h2>Login to arion-cafe.myshopify.com</h2>
             <img src="${barcode}" alt="barcode" width="220px" height="220px">
             <p>
@@ -171,10 +173,10 @@
                 <a href="${apiUrl}/bitlogin/api/login/whatsapp/${code}">Link testing - ${code}</a>
             </p>
             </div>`;
-          if (!divForBarcode) content.append(html);
-        }
-        if (loginStatus === 1) {
-          const html = `<div id="whatsappOpened">
+                if (!divForBarcode) content.append(html);
+            }
+            if (loginStatus === 1) {
+                const html = `<div id="whatsappOpened">
             <h2 class="margin-none">Opening WhatsApp</h2>
             <div class="spinner">
                 <div class="rect1"></div>
@@ -184,13 +186,13 @@
             </div>
             <p class="margin-none">Send the WhatsApp message on your phone<p>
             </div>`;
-          if (!divOpenWhatsapp) {
-            content.append(html);
-          }
-          $("#showBarcode").remove();
-        }
-        if (loginStatus === 2) {
-          const html = `<div id="whatsappVerify">
+                if (!divOpenWhatsapp) {
+                    content.append(html);
+                }
+                $("#showBarcode").remove();
+            }
+            if (loginStatus === 2) {
+                const html = `<div id="whatsappVerify">
             <h2 class="margin-none">Verifying</h2>
             <div class="spinner">
                 <div class="rect1"></div>
@@ -200,16 +202,16 @@
             </div>
             <p class="margin-none">Click link you received on WhatsApp<p>
             </div>`;
-          if (!divVerifyWhatsapp) {
-            content.append(html);
-          }
-          $("#showBarcode").remove();
-          $("#whatsappOpened").remove();
-        }
-        if (loginStatus === 3) {
-          const customer = data.customer;
-          if (customer.email) {
-            const html = `<div id="successContent">
+                if (!divVerifyWhatsapp) {
+                    content.append(html);
+                }
+                $("#showBarcode").remove();
+                $("#whatsappOpened").remove();
+            }
+            if (loginStatus === 3) {
+                const customer = data.customer;
+                if (customer.email) {
+                    const html = `<div id="successContent">
                 <h2 class="margin-none">Login Success!</h2>
                 <svg
                   width="120"
@@ -226,16 +228,16 @@
                 </svg>
                 <p class="margin-none">Redirecting ...<p>
                 </div>`;
-            if (!divSuccess) {
-              content.append(html);
-            }
-            $("#showBarcode").remove();
-            $("#whatsappOpened").remove();
-            $("#whatsappVerify").remove();
-            $("#completeProfile").remove();
-            window.location.href = `${apiUrl}/bitlogin/api/login/whatsapp/callback?email=${customer.email}`;
-          } else {
-            const html = `<div id="completeProfile">
+                    if (!divSuccess) {
+                        content.append(html);
+                    }
+                    $("#showBarcode").remove();
+                    $("#whatsappOpened").remove();
+                    $("#whatsappVerify").remove();
+                    $("#completeProfile").remove();
+                    window.location.href = `${apiUrl}/bitlogin/api/login/whatsapp/callback?email=${customer.email}`;
+                } else {
+                    const html = `<div id="completeProfile">
             <h2>Welcome to ${data.data.domain}</h2>
             <form id="formCustomer">
               <div id="alertBody" class="hide">
@@ -267,9 +269,9 @@
               </button>
             </form>
             </div>`;
-            if (!divProfile) {
-              const formScript = document.createElement("script");
-              const ajaxScript = `$("#formCustomer").submit(function(e) {
+                    if (!divProfile) {
+                        const formScript = document.createElement("script");
+                        const ajaxScript = `$("#formCustomer").submit(function(e) {
                 const name = $("#name").val();
                 const email = $("#email").val();
                 const phone = $("#phone").val();
@@ -310,31 +312,32 @@
 
                 e.preventDefault();
               });`;
-              formScript.append(ajaxScript);
-              content.append(html, formScript);
+                        formScript.append(ajaxScript);
+                        content.append(html, formScript);
+                    }
+                    $("#showBarcode").remove();
+                    $("#whatsappOpened").remove();
+                    $("#whatsappVerify").remove();
+                    $("#successContent").remove();
+                }
             }
-            $("#showBarcode").remove();
-            $("#whatsappOpened").remove();
-            $("#whatsappVerify").remove();
-            $("#successContent").remove();
-          }
         }
-      }
 
-      function fetchUpdates() {
-        fetch(updateUrl)
-          .then((response) => response.json())
-          .then((data) => {
-            updateView(data);
-            setTimeout(fetchUpdates, updateInterval);
-          })
-          .catch((error) => {
-            console.log("Error fetching updates: " + error);
-            setTimeout(fetchUpdates, updateInterval);
-          });
-      }
+        function fetchUpdates() {
+            fetch(updateUrl)
+                .then((response) => response.json())
+                .then((data) => {
+                    updateView(data);
+                    setTimeout(fetchUpdates, updateInterval);
+                })
+                .catch((error) => {
+                    console.log("Error fetching updates: " + error);
+                    setTimeout(fetchUpdates, updateInterval);
+                });
+        }
 
-      fetchUpdates();
+        fetchUpdates();
     </script>
-  </body>
+</body>
+
 </html>
