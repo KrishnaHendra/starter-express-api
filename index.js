@@ -48,9 +48,13 @@ app.get("/success", async (req, res) => {
   });
 })
 
+app.get('/view', (req, res) => {
+  res.render("testing")
+})
+
 app.get("/", (req, res) => {
   res.status(200).json({
-    message: "Success handler GET main",
+    message: "Success",
   });
 });
 
