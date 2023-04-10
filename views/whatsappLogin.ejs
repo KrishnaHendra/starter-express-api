@@ -4,13 +4,337 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>bitLogin - login WhatsApp</title>
+    <title>bitLogin - Login WhatsApp</title>
+    <script
+      src="https://code.jquery.com/jquery-3.6.4.min.js"
+      integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+      crossorigin="anonymous"
+    ></script>
+
+    <style>
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+      }
+
+      .container {
+        text-align: center;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+      }
+
+      .margin-none {
+        margin: 0;
+      }
+
+      .margin-50 {
+        margin: 50px;
+      }
+
+      .hide {
+        display: none;
+      }
+
+      .form-group {
+        display: block;
+        text-align: center;
+        margin: 10px 0;
+      }
+
+      .form-control {
+        margin: 5px 0;
+        width: 90%;
+        padding: 15px;
+      }
+
+      #btnSubmit {
+        padding: 15px;
+        color: white;
+        border-radius: 10px;
+        background: #262627;
+        font-size: 16px;
+        margin-top: 20px;
+      }
+
+      #btnSubmit:hover {
+        background: #393939;
+      }
+
+      #alertBody {
+        background: #cb3838;
+        padding: 20px;
+        color: white;
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        border-radius: 5px;
+      }
+
+      /* Loader */
+      .spinner {
+        margin: 80px auto;
+        width: 90px;
+        height: 80px;
+        text-align: center;
+        font-size: 10px;
+      }
+
+      .spinner > div {
+        background-color: #333;
+        height: 100%;
+        width: 6px;
+        display: inline-block;
+
+        -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+        animation: sk-stretchdelay 1.2s infinite ease-in-out;
+      }
+
+      .spinner .rect2 {
+        -webkit-animation-delay: -1.1s;
+        animation-delay: -1.1s;
+      }
+
+      .spinner .rect3 {
+        -webkit-animation-delay: -1s;
+        animation-delay: -1s;
+      }
+
+      .spinner .rect4 {
+        -webkit-animation-delay: -0.9s;
+        animation-delay: -0.9s;
+      }
+
+      .spinner .rect5 {
+        -webkit-animation-delay: -0.8s;
+        animation-delay: -0.8s;
+      }
+
+      @-webkit-keyframes sk-stretchdelay {
+        0%,
+        40%,
+        100% {
+          -webkit-transform: scaleY(0.4);
+        }
+
+        20% {
+          -webkit-transform: scaleY(1);
+        }
+      }
+
+      @keyframes sk-stretchdelay {
+        0%,
+        40%,
+        100% {
+          transform: scaleY(0.4);
+          -webkit-transform: scaleY(0.4);
+        }
+
+        20% {
+          transform: scaleY(1);
+          -webkit-transform: scaleY(1);
+        }
+      }
+    </style>
   </head>
+
   <body>
-    <h2>WhatsApp Login</h2>
-    <p>
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Pariatur ratione
-      dicta earum error cumque aliquid quo accusamus eos itaque aperiam!
-    </p>
+    <div class="container">
+      <div id="content"></div>
+    </div>
+
+    <script>
+      const apiUrl = "<%= apiUrl %>";
+      const code = "<%= code %>";
+      const barcode = "<%= src %>";
+      const updateUrl = `${apiUrl}/bitlogin/api/login/whatsapp/status?code=${code}`;
+      const updateInterval = 2500;
+      const content = $("#content");
+
+      function updateView(data) {
+        const loginStatus = data ? data.data.status : 0;
+        const divForBarcode = document.getElementById("showBarcode");
+        const divOpenWhatsapp = document.getElementById("whatsappOpened");
+        const divVerifyWhatsapp = document.getElementById("whatsappVerify");
+        const divSuccess = document.getElementById("successContent");
+        const divProfile = document.getElementById("completeProfile");
+
+        if (loginStatus === 0) {
+          const html = `<div id="showBarcode">
+            <h2>Login to arion-cafe.myshopify.com</h2>
+            <img src="${barcode}" alt="barcode" width="220px" height="220px">
+            <p>
+                Scan this QR from your phone camera <br>
+                <a href="${apiUrl}/bitlogin/api/login/whatsapp/${code}">Link testing - ${code}</a>
+            </p>
+            </div>`;
+          if (!divForBarcode) content.append(html);
+        }
+        if (loginStatus === 1) {
+          const html = `<div id="whatsappOpened">
+            <h2 class="margin-none">Opening WhatsApp</h2>
+            <div class="spinner">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+            </div>
+            <p class="margin-none">Send the WhatsApp message on your phone<p>
+            </div>`;
+          if (!divOpenWhatsapp) {
+            content.append(html);
+          }
+          $("#showBarcode").remove();
+        }
+        if (loginStatus === 2) {
+          const html = `<div id="whatsappVerify">
+            <h2 class="margin-none">Verifying</h2>
+            <div class="spinner">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+            </div>
+            <p class="margin-none">Click link you received on WhatsApp<p>
+            </div>`;
+          if (!divVerifyWhatsapp) {
+            content.append(html);
+          }
+          $("#showBarcode").remove();
+          $("#whatsappOpened").remove();
+        }
+        if (loginStatus === 3) {
+          const customer = data.customer;
+          if (customer.email) {
+            const html = `<div id="successContent">
+                <h2 class="margin-none">Login Success!</h2>
+                <svg
+                  width="120"
+                  height="120"
+                  viewBox="0 0 117 117"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="margin-50"
+                >
+                  <path
+                    d="M58.5 0.3125C73.9323 0.3125 88.7325 6.44295 99.6448 17.3552C110.557 28.2675 116.688 43.0677 116.688 58.5C116.688 73.9323 110.557 88.7325 99.6448 99.6448C88.7325 110.557 73.9323 116.688 58.5 116.688C43.0677 116.688 28.2675 110.557 17.3552 99.6448C6.44295 88.7325 0.3125 73.9323 0.3125 58.5C0.3125 43.0677 6.44295 28.2675 17.3552 17.3552C28.2675 6.44295 43.0677 0.3125 58.5 0.3125ZM51.2515 69.9796L38.3256 57.0453C37.8622 56.5819 37.312 56.2143 36.7066 55.9636C36.1012 55.7128 35.4522 55.5837 34.7969 55.5837C34.1416 55.5837 33.4927 55.7128 32.8872 55.9636C32.2818 56.2143 31.7316 56.5819 31.2682 57.0453C30.3324 57.9812 29.8066 59.2505 29.8066 60.574C29.8066 61.8975 30.3324 63.1668 31.2682 64.1026L47.727 80.5614C48.1891 81.0271 48.7388 81.3967 49.3444 81.649C49.95 81.9012 50.5996 82.0311 51.2557 82.0311C51.9117 82.0311 52.5613 81.9012 53.1669 81.649C53.7725 81.3967 54.3222 81.0271 54.7843 80.5614L88.8656 46.4718C89.3351 46.0103 89.7087 45.4605 89.9647 44.8539C90.2207 44.2473 90.3541 43.5961 90.3572 42.9377C90.3602 42.2794 90.2329 41.6269 89.9826 41.018C89.7322 40.4091 89.3638 39.8557 88.8985 39.3899C88.4332 38.9241 87.8803 38.555 87.2717 38.3039C86.6631 38.0529 86.0108 37.9248 85.3524 37.9271C84.694 37.9293 84.0426 38.062 83.4358 38.3172C82.8289 38.5725 82.2786 38.9455 81.8166 39.4145L51.2515 69.9796Z"
+                    fill="#25D366"
+                  />
+                </svg>
+                <p class="margin-none">Redirecting ...<p>
+                </div>`;
+            if (!divSuccess) {
+              content.append(html);
+            }
+            $("#showBarcode").remove();
+            $("#whatsappOpened").remove();
+            $("#whatsappVerify").remove();
+            $("#completeProfile").remove();
+            window.location.href = `${apiUrl}/bitlogin/api/login/whatsapp/callback?email=${customer.email}`;
+          } else {
+            const html = `<div id="completeProfile">
+            <h2>Welcome to ${data.data.domain}</h2>
+            <form id="formCustomer">
+              <div id="alertBody" class="hide">
+                <span id="alertMessage"></span>
+              </div>
+              <input type="hidden" id="phone" value="${data.data.phoneNumber}"/>
+              <div class="form-group">
+                <label for="name">What is your name?</label>
+                <br />
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  placeholder="Full Name"
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">What is your email?</label>
+                <br />
+                <input
+                  type="text"
+                  class="form-control"
+                  id="email"
+                  placeholder="Email"
+                />
+              </div>
+              <button type="submit" id="btnSubmit">
+                Submit
+              </button>
+            </form>
+            </div>`;
+            if (!divProfile) {
+              const formScript = document.createElement("script");
+              const ajaxScript = `$("#formCustomer").submit(function(e) {
+                const name = $("#name").val();
+                const email = $("#email").val();
+                const phone = $("#phone").val();
+                const domain = "${data.data.domain}";
+                const alertBody = $("#alertBody");
+
+                if (!name) {
+                    alertBody.removeClass("hide");
+                    $("#alertMessage").text("Name is required");
+                    return false;
+                }
+                if (!email) {
+                    alertBody.removeClass("hide");
+                    $("#alertMessage").text("Email is required");
+                    return false;
+                }
+
+                $.ajax({
+                  method: 'POST',
+                  url: '/bitlogin/api/shopify/customer',
+                  data: {
+                    name,
+                    email,
+                    phone,
+                    domain,
+                  },
+                  beforeSend: function (data) {
+                    $('#btnSubmit').attr('disabled', true);
+                    $('#btnSubmit').text('Please wait...');
+                  },
+                  error: function (err) {
+                    console.log(err);
+                  },
+                  success: function (data) {
+                    console.log(data);
+                  },
+                });
+
+                e.preventDefault();
+              });`;
+              formScript.append(ajaxScript);
+              content.append(html, formScript);
+            }
+            $("#showBarcode").remove();
+            $("#whatsappOpened").remove();
+            $("#whatsappVerify").remove();
+            $("#successContent").remove();
+          }
+        }
+      }
+
+      function fetchUpdates() {
+        fetch(updateUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            updateView(data);
+            setTimeout(fetchUpdates, updateInterval);
+          })
+          .catch((error) => {
+            console.log("Error fetching updates: " + error);
+            setTimeout(fetchUpdates, updateInterval);
+          });
+      }
+
+      fetchUpdates();
+    </script>
   </body>
 </html>
