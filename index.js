@@ -4,7 +4,13 @@ const app = express();
 app.set("view engine", "ejs");
 
 app.get("/login", (req, res) => {
-  res.render("whatsappLogin");
+  const { code, shop } = req.query;
+  res.json({
+    message: "Success",
+    code,
+    shop,
+  });
+  // res.render("whatsappLogin", { code });
 });
 
 app.get("/", (req, res) => {
