@@ -56,8 +56,11 @@ app.get("/success", async (req, res) => {
   }
 })
 
-app.get('/view', (req, res) => {
-  res.render("testing")
+app.get('/view', async (req, res) => {
+  const data = await axios.get("https://api.bitbybit.studio/bitlogin/api/integrations");
+  res.render("testing", {
+    data
+  });
 })
 
 app.get("/", (req, res) => {
