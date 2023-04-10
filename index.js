@@ -3,7 +3,7 @@ const app = express();
 
 app.set("view engine", "ejs");
 
-app.set("/login", (req, res) => {
+app.get("/login", (req, res) => {
   res.render("whatsappLogin");
 });
 
