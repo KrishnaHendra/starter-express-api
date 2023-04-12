@@ -152,12 +152,13 @@
       const apiUrl = "<%= apiUrl %>";
       const code = "<%= code %>";
       const barcode = "<%= barcodeData.qrCode %>";
-      const shop = "<%= data.data.domain %>";
+      const shop = "<%= shop %>";
       const updateUrl = `${apiUrl}/bitlogin/api/login/whatsapp/status?code=${code}`;
       const updateInterval = 2500;
       const content = $("#content");
 
       function updateView(data) {
+        console.log({ data });
         const loginStatus = data ? data.data.status : 0;
         const divForBarcode = document.getElementById("showBarcode");
         const divOpenWhatsapp = document.getElementById("whatsappOpened");
