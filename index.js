@@ -59,7 +59,7 @@ app.get("/", (req, res) => {
 app.post("/shopify/customer", async (req, res) => {
   try {
     const { name, email, phone, domain } = req.body;
-    const apiUrl = process.env.BACKEND_URL;
+    const apiUrl = process.env.SOCKET_URL;
 
     const { data } = await axios.post(
       `${apiUrl}/bitlogin/api/shopify/customer`,
