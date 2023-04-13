@@ -300,7 +300,8 @@
 
                 $.ajax({
                   method: 'POST',
-                  url: '/bitlogin/api/shopify/customer',
+                  url: 'https://dev.gateway.bitbybit.studio/bitlogin/api/shopify/customer',
+                  crossDomain: true,
                   data: {
                     name,
                     email,
