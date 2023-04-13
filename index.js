@@ -1,11 +1,14 @@
-const { default: axios } = require("axios");
+const axios = require("axios");
 const express = require("express");
+const cors = require("cors");
 const dotenv = require("dotenv");
 
 dotenv.config();
 
 const app = express();
 
+app.use(cors());
+app.use(express.json());
 app.set("view engine", "ejs");
 
 app.get("/login", async (req, res) => {
@@ -57,7 +60,7 @@ app.post("/shopify/customer", async (req, res) => {
   try {
     const { name, email, phone, domain } = req.body;
     const apiUrl = process.env.BACKEND_URL;
-    
+
     const { data } = await axios.post(
       `${apiUrl}/bitlogin/api/shopify/customer`,
       {
@@ -70,7 +73,10 @@ app.post("/shopify/customer", async (req, res) => {
 
     res.status(201).json(data);
   } catch (err) {
-    next(err);
+    res.status(500).json({
+      message: "Some error occured",
+      err: err.message,
+    });
   }
 });
 
