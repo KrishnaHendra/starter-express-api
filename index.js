@@ -47,25 +47,31 @@ app.get("/success", async (req, res) => {
   }
 });
 
-app.get("/view", async (req, res) => {
-  const data = await axios.get(
-    "https://api.bitbybit.studio/bitlogin/api/integrations"
-  );
-  res.render("testing", {
-    data,
-  });
-});
-
 app.get("/", (req, res) => {
   res.status(200).json({
-    message: "Success",
+    message: "Dashboard bitLogin Frontend",
   });
 });
 
-app.get("/test", (req, res) => {
-  res.status(200).json({
-    message: "Success handler GET testing",
-  });
+app.post("/shopify/customer", async (req, res) => {
+  try {
+    const { name, email, phone, domain } = req.body;
+    const apiUrl = process.env.BACKEND_URL;
+    
+    const { data } = await axios.post(
+      `${apiUrl}/bitlogin/api/shopify/customer`,
+      {
+        name,
+        email,
+        phone,
+        domain,
+      }
+    );
+
+    res.status(201).json(data);
+  } catch (err) {
+    next(err);
+  }
 });
 
 const port = process.env.PORT;
