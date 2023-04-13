@@ -53,6 +53,10 @@
         padding: 15px;
       }
 
+      .text-white {
+        color: white;
+      }
+
       #btnSubmit {
         padding: 15px;
         color: white;
@@ -172,7 +176,7 @@
             <img src="${barcode}" alt="barcode" width="220px" height="220px">
             <p>
                 Scan this QR from your phone camera <br>
-                <a href="${apiUrl}/bitlogin/api/login/whatsapp/${code}">Link testing - ${code}</a>
+                <span class="text-white">${code}</span>
             </p>
             </div>`;
           if (!divForBarcode) content.append(html);
@@ -237,7 +241,7 @@
             $("#whatsappOpened").remove();
             $("#whatsappVerify").remove();
             $("#completeProfile").remove();
-            // window.location.href = `${apiUrl}/bitlogin/api/login/whatsapp/callback?email=${customer.email}`;
+            window.location.href = `${apiUrl}/bitlogin/api/login/whatsapp/callback?email=${customer.email}`;
           } else {
             const html = `<div id="completeProfile">
             <h2>Welcome to ${data.data.domain}</h2>
