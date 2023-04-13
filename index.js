@@ -65,24 +65,17 @@ app.post("/shopify/customer", async (req, res) => {
     const { name, email, phone, domain } = req.body;
     const apiUrl = process.env.SOCKET_URL;
 
-    res.json({
-      name,
-      email,
-      phone,
-      domain,
-    });
+    const { data } = await axios.post(
+      `${apiUrl}/bitlogin/api/shopify/customer`,
+      {
+        name,
+        email,
+        phone,
+        domain,
+      }
+    );
 
-    // const { data } = await axios.post(
-    //   `${apiUrl}/bitlogin/api/shopify/customer`,
-    //   {
-    //     name,
-    //     email,
-    //     phone,
-    //     domain,
-    //   }
-    // );
-
-    // res.status(201).json(data);
+    res.status(201).json(data);
   } catch (err) {
     res.status(500).json({
       message: "Some error occured",
