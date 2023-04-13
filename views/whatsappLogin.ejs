@@ -301,12 +301,11 @@
                 $.ajax({
                   method: 'POST',
                   url: '/shopify/customer',
-                  data: {
-                    name,
-                    email,
-                    phone,
-                    domain,
-                  },
+                  contentType: 'application/json',
+                  dataType: 'json',
+                  data: JSON.stringify({
+                    name, email, phone, domain
+                  }),
                   beforeSend: function (data) {
                     $('#btnSubmit').attr('disabled', true);
                     $('#btnSubmit').text('Please wait...');

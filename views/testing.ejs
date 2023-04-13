@@ -1,20 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>bitLogin Testing</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <h2>Testing View</h2>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus, ab minus debitis vel eveniet pariatur?</p>
-    <pre>
-        <%= data.data.message %>,
-        <%= data.data.name %>
-    </pre>
-</body>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus, ab
+      minus debitis vel eveniet pariatur?
+    </p>
+    <span id="alertMessage"></span>
+    <form id="formTesting">
+      <label for="phone">HP</label>
+      <input type="text" placeholder="Nomor HP" id="phone" /> <br />
+      <label for="name">Name</label>
+      <input type="text" placeholder="Name" id="name" /> <br />
+      <label for="email">Email</label>
+      <input type="text" placeholder="Email" id="email" /> <br />
+      <label for="domain">Domain</label>
+      <input
+        type="text"
+        placeholder="Domain"
+        id="domain"
+        value="arion-cafe.myshopify.com"
+      />
+      <br />
+      <button type="submit">Submit</button>
+    </form>
 
+    <script
+      src="https://code.jquery.com/jquery-3.6.4.min.js"
+      integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      $(document).ready(function () {
+        $("#formTesting").submit(function (e) {
+          const alertMessage = $("#alertMessage");
+          const phone = $("#phone").val();
+          const name = $("#name").val();
+          const email = $("#email").val();
+          const domain = $("#domain").val();
+
+          if (!phone) {
+            alertMessage.text("Phone is required");
+            return false;
+          }
+          if (!name) {
+            alertMessage.text("Name is required");
+            return false;
+          }
+          if (!email) {
+            alertMessage.text("Email is required");
+            return false;
+          }
+
+          const data = {
+            name,
+            email,
+            phone,
+            domain,
+          };
+
+          $.ajax({
+            method: "POST",
+            url: "/shopify/customer",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(data),
+            error: function (error) {
+              console.log(error);
+            },
+            success: function (data) {
+              console.log(data);
+            },
+          });
+
+          e.preventDefault();
+        });
+      });
+    </script>
+  </body>
 </html>

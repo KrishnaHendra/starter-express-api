@@ -56,6 +56,10 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/testing", (req, res) => {
+  res.render("testing");
+});
+
 app.post("/shopify/customer", async (req, res) => {
   try {
     const { name, email, phone, domain } = req.body;
