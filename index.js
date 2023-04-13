@@ -75,7 +75,8 @@ app.post("/shopify/customer", async (req, res) => {
   } catch (err) {
     res.status(500).json({
       message: "Some error occured",
-      err: err.message,
+      error: err.message,
+      detail: err,
     });
   }
 });
