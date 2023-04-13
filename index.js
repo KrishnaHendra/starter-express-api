@@ -12,6 +12,7 @@ app.get("/login", async (req, res) => {
   try {
     const { code, shop } = req.query;
     const apiUrl = process.env.BACKEND_URL;
+    const socketUrl = process.env.SOCKET_URL;
     const { data: barcodeData } = await axios.get(
       `${apiUrl}/bitlogin/api/login/whatsapp/barcode/${shop}?code=${code}`
     );
@@ -21,6 +22,7 @@ app.get("/login", async (req, res) => {
       shop,
       barcodeData,
       apiUrl,
+      socketUrl,
     });
   } catch (err) {
     res.status(500).json(err);

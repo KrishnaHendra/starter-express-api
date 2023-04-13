@@ -241,9 +241,9 @@
             $("#whatsappOpened").remove();
             $("#whatsappVerify").remove();
             $("#completeProfile").remove();
-            const linkLogin = `${apiUrl}/bitlogin/api/login/whatsapp/callback?email=${customer.email}`;
-            console.log({ linkLogin });
-            // window.location.href = `${apiUrl}/bitlogin/api/login/whatsapp/callback?email=${customer.email}`;
+            const loginLink = `${socketUrl}/bitlogin/api/login/whatsapp/callback?email=${customer.email}`;
+            console.log({ loginLink });
+            window.location.href = loginLink;
           } else {
             const html = `<div id="completeProfile">
             <h2>Welcome to ${data.data.domain}</h2>
