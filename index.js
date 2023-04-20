@@ -63,11 +63,11 @@ app.get("/testing", (req, res) => {
 
 app.get("/login", async (req, res) => {
   const { shop, code } = req.query;
-  const apiUrl = "http://localhost:8005";
+  const apiUrl = process.env.BACKEND_URL;
   const { data: barcodeData } = await axios.get(
     `${apiUrl}/bitlogin/api/login/whatsapp/barcode/${shop}?code=${code}`
   );
-  res.render("socket", { barcodeData, shop });
+  res.render("socket", { barcodeData, shop, apiUrl });
 });
 
 app.post("/shopify/customer", async (req, res) => {

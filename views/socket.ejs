@@ -235,6 +235,7 @@
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <script>
       let loginStatus = 0;
+      const apiUrl = "<%= apiUrl %>";
       const barcodeContent = document.getElementById("barcodeContent");
       const openWhatsappContent = document.getElementById(
         "openWhatsappContent"
@@ -247,7 +248,7 @@
       );
       const formCustomerContent = document.getElementById("formCustomer");
 
-      const socket = io.connect("http://localhost:8005", {
+      const socket = io.connect(apiUrl, {
         path: "/bitlogin/socket.io/",
       });
 
@@ -288,8 +289,7 @@
       });
 
       const updateInterval = 2500;
-      const validateWhatsappUrl =
-        "http://localhost:8005/bitlogin/api/login/whatsapp/status";
+      const validateWhatsappUrl = `${apiUrl}/bitlogin/api/login/whatsapp/status`;
       const controller = new AbortController();
       const signal = controller.signal;
 
