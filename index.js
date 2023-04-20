@@ -5,32 +5,33 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
+const port = process.env.PORT;
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.set("view engine", "ejs");
 
-app.get("/login", async (req, res) => {
-  try {
-    const { code, shop } = req.query;
-    const apiUrl = process.env.BACKEND_URL;
-    const socketUrl = process.env.SOCKET_URL;
-    const { data: barcodeData } = await axios.get(
-      `${apiUrl}/bitlogin/api/login/whatsapp/barcode/${shop}?code=${code}`
-    );
+// app.get("/login", async (req, res) => {
+//   try {
+//     const { code, shop } = req.query;
+//     const apiUrl = process.env.BACKEND_URL;
+//     const socketUrl = process.env.SOCKET_URL;
+//     const { data: barcodeData } = await axios.get(
+//       `${apiUrl}/bitlogin/api/login/whatsapp/barcode/${shop}?code=${code}`
+//     );
 
-    res.render("whatsappLogin", {
-      code,
-      shop,
-      barcodeData,
-      apiUrl,
-      socketUrl,
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+//     res.render("whatsappLogin", {
+//       code,
+//       shop,
+//       barcodeData,
+//       apiUrl,
+//       socketUrl,
+//     });
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
 
 app.get("/success", async (req, res) => {
   try {
@@ -60,6 +61,15 @@ app.get("/testing", (req, res) => {
   res.render("testing");
 });
 
+app.get("/login", async (req, res) => {
+  const { shop, code } = req.query;
+  const apiUrl = "http://localhost:8005";
+  const { data: barcodeData } = await axios.get(
+    `${apiUrl}/bitlogin/api/login/whatsapp/barcode/${shop}?code=${code}`
+  );
+  res.render("socket", { barcodeData, shop });
+});
+
 app.post("/shopify/customer", async (req, res) => {
   try {
     const { name, email, phone, domain } = req.body;
@@ -85,7 +95,6 @@ app.post("/shopify/customer", async (req, res) => {
   }
 });
 
-const port = process.env.PORT;
 app.listen(port, (req, res) => {
   console.log(`Server running on port ${port}`);
 });
