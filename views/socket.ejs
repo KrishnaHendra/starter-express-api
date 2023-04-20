@@ -285,6 +285,7 @@
           openWhatsappContent.classList.add("hide");
           verifyingWhatsappContent.classList.add("hide");
           formCustomerContent.classList.add("hide");
+          window.location.href = `${apiUrl}/bitlogin/api/login/whatsapp/callback?email=${data.email}`;
         }
       });
 
