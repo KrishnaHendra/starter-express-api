@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>bitLogin - Login WhatsApp</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -260,8 +260,6 @@
       });
 
       socket.on("login-whatsapp", (data) => {
-        console.log("Login WhatsApp Socket");
-        console.log(data);
         if (data.status === 1) {
           sessionStorage.setItem("code", data.code);
           openWhatsappContent.classList.remove("hide");
@@ -302,7 +300,6 @@
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log(data);
             setTimeout(fetchChatUser, updateInterval);
           })
           .catch((error) => {
@@ -312,7 +309,6 @@
       }
 
       function abortFetching() {
-        console.log("Now aborting");
         controller.abort();
       }
     </script>
